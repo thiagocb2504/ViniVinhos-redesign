@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Painel | Vini Vinhos</title>
+  <link rel="icon" type="image/png" href="./img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+
+  <!-- Usado pela remoção de fundo (@imgly/background-removal), que roda no próprio navegador. -->
+  <script type="importmap">
+    {
+      "imports": {
+        "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/ort.wasm.min.mjs",
+        "onnxruntime-web/webgpu": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.21.0/dist/ort.webgpu.min.mjs"
+      }
+    }
+  </script>
+</head>
+<body class="admin-page">
+  <header class="site-header solid">
+    <div class="nav-wrap admin-nav-wrap">
+      <a class="brand" href="index.html"><img src="./img/logo.png" alt="Vini Vinhos"></a>
+      <nav class="admin-tabs" id="admin-tabs" hidden>
+        <button class="admin-tab active" type="button" data-tab="adicionar"><i class="fa-solid fa-plus"></i><span>Adicionar vinho</span></button>
+        <button class="admin-tab" type="button" data-tab="configuracoes"><i class="fa-solid fa-sliders"></i><span>Configurações</span></button>
+      </nav>
+      <div class="admin-header-actions" id="header-actions" hidden>
+        <a class="admin-icon-link" href="catalogo.html" target="_blank" rel="noopener" title="Ver catálogo"><i class="fa-solid fa-arrow-up-right-from-square"></i><span>Ver catálogo</span></a>
+        <button class="nav-cta admin-logout" id="logout" type="button"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sair</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- LOGIN -->
+    <section class="admin-login" id="login-view">
+      <form class="admin-card login-card" id="login-form">
+        <div>
+          <p class="eyebrow">Área restrita</p>
+          <h1>Painel da loja</h1>
+          <p class="card-lead">Entre para cadastrar e editar os vinhos do catálogo.</p>
+        </div>
+        <label class="field">
+          <span>Senha</span>
+          <span class="password-field">
+            <input id="login-senha" type="password" autocomplete="current-password" required>
+            <button class="password-toggle" type="button" aria-label="Mostrar senha" data-alvo="login-senha"><i class="fa-regular fa-eye"></i></button>
+          </span>
+        </label>
+        <p class="form-error" id="login-erro" role="alert"></p>
+        <button class="button button-primary button-block" type="submit">Entrar</button>
+        <a class="back-link login-back" href="index.html">← Voltar para o site</a>
+      </form>
+    </section>
+
+    <!-- PAINEL -->
+    <div id="app-view" hidden>
+
+      <!-- ADICIONAR / EDITAR -->
+      <section class="admin-panel" id="tab-adicionar">
+        <div class="container">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow" id="form-eyebrow">Novo rótulo</p>
+              <h1 id="form-titulo">Adicionar vinho</h1>
+            </div>
+            <span class="edit-flag" id="edit-flag" hidden><i class="fa-solid fa-pen"></i> Modo edição</span>
+          </div>
+
+          <form class="wine-form" id="wine-form" novalidate>
+            <div class="admin-card wine-fields">
+
+              <fieldset class="field-group">
+                <legend>Rótulo</legend>
+                <label class="field span-2">
+                  <span>Nome <em>*</em></span>
+                  <input name="Nome" type="text" maxlength="200" required placeholder="Ex.: Catena Malbec">
+                </label>
+                <label class="field span-2">
+                  <span>Tipo</span>
+                  <select name="Tipo">
+                    <option value="">Selecione</option>
+                    <option>Tinto</option>
+                    <option>Branco</option>
+                    <option>Rosé</option>
+                    <option>Espumante</option>
+                    <option>Sobremesa</option>
+                    <option>Fortificado</option>
+                  </select>
+                </label>
+              </fieldset>
+
+              <fieldset class="field-group">
+                <legend>Venda</legend>
+                <label class="field">
+                  <span>Preço</span>
+                  <span class="input-affix">
+                    <span class="affix">R$</span>
+                    <input name="Preço" type="text" inputmode="decimal" placeholder="0,00">
+                  </span>
+                </label>
+                <label class="field">
+                  <span>Estoque</span>
+                  <span class="input-affix">
+                    <input name="Estoque" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+                    <span class="affix">un.</span>
+                  </span>
+                </label>
+              </fieldset>
+
+              <fieldset class="field-group">
+                <legend>Detalhes</legend>
+                <label class="field">
+                  <span>Uva</span>
+                  <input name="Uva" type="text" list="lista-uvas" maxlength="200" placeholder="Ex.: Malbec">
+                </label>
+                <label class="field">
+                  <span>Safra</span>
+                  <input name="Safra" type="text" inputmode="numeric" maxlength="4" placeholder="Ex.: 2021">
+                </label>
+                <label class="field">
+                  <span>País</span>
+                  <input name="País" type="text" list="lista-paises" maxlength="200" placeholder="Ex.: Argentina">
+                </label>
+                <label class="field">
+                  <span>Região</span>
+                  <input name="Região" type="text" list="lista-regioes" maxlength="200" placeholder="Ex.: Mendoza">
+                </label>
+                <p class="field-hint span-2" id="origem-preview">No catálogo aparece como: <strong>—</strong></p>
+              </fieldset>
+            </div>
+
+            <aside class="image-column">
+            <div class="admin-card image-card">
+              <div class="image-card-head">
+                <h2>Imagem</h2>
+                <label class="switch">
+                  <input id="remover-fundo" type="checkbox" checked>
+                  <span>Remover fundo</span>
+                </label>
+              </div>
+
+              <label class="dropzone" id="dropzone">
+                <input id="imagem-input" type="file" accept="image/png,image/jpeg,image/webp,image/avif,image/gif">
+                <div class="dropzone-preview" id="preview" hidden><img id="preview-img" alt="Prévia da imagem"></div>
+                <div class="dropzone-change" aria-hidden="true"><i class="fa-solid fa-arrows-rotate"></i> Trocar foto</div>
+                <div class="dropzone-empty" id="dropzone-empty">
+                  <span class="dropzone-icon"><i class="fa-regular fa-image"></i></span>
+                  <strong>Escolha ou arraste uma foto</strong>
+                  <span>JPG, PNG ou WEBP · convertida para WEBP</span>
+                </div>
+              </label>
+
+              <div class="image-footer">
+                <p class="image-status" id="image-status" aria-live="polite"></p>
+                <button class="link-button" id="limpar-imagem" type="button" hidden><i class="fa-solid fa-xmark"></i> Remover imagem</button>
+              </div>
+            </div>
+            </aside>
+
+            <div class="save-bar">
+              <div class="save-bar-info">
+                <span class="save-state" id="save-state"></span>
+                <p class="form-error" id="form-erro" role="alert"></p>
+              </div>
+              <div class="save-bar-actions">
+                <button class="button button-ghost" id="abrir-previa" type="button"><i class="fa-regular fa-eye"></i><span>Prévia no catálogo</span></button>
+                <button class="button button-ghost" id="cancelar-edicao" type="button" hidden>Cancelar</button>
+                <button class="button button-primary" id="salvar" type="submit" title="Salvar (Ctrl+S)">Adicionar vinho</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- CONFIGURAÇÕES -->
+      <section class="admin-panel" id="tab-configuracoes" hidden>
+        <div class="container">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Painel</p>
+              <h1>Configurações</h1>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <section class="admin-card settings-wines">
+              <div class="card-head">
+                <h2>Vinhos cadastrados</h2>
+                <span class="muted" id="wines-count"></span>
+              </div>
+              <label class="search-box" for="busca-admin"><i class="fa-solid fa-magnifying-glass"></i><input id="busca-admin" type="search" placeholder="Buscar por nome, uva, país..." autocomplete="off"></label>
+              <div class="filter-row list-filters" id="list-filters" aria-label="Filtrar vinhos">
+                <button class="filter-btn active" type="button" data-filtro="todos">Todos <b></b></button>
+                <button class="filter-btn" type="button" data-filtro="sem-foto">Sem foto <b></b></button>
+                <button class="filter-btn" type="button" data-filtro="sem-preco">Sem preço <b></b></button>
+                <button class="filter-btn" type="button" data-filtro="sem-estoque">Esgotados <b></b></button>
+              </div>
+              <ul class="wine-list" id="wine-list"></ul>
+            </section>
+
+            <div class="settings-side">
+              <form class="admin-card" id="config-form">
+                <div>
+                  <h2>Imagens</h2>
+                  <p class="card-lead">Valem para as próximas fotos enviadas.</p>
+                </div>
+                <label class="switch">
+                  <input name="removerFundo" type="checkbox">
+                  <span>Remover fundo automaticamente</span>
+                </label>
+                <label class="field">
+                  <span class="field-row">Qualidade do WEBP <strong id="qualidade-valor"></strong></span>
+                  <input name="qualidade" type="range" min="50" max="100" step="5">
+                </label>
+                <label class="field">
+                  <span>Tamanho máximo (lado maior)</span>
+                  <select name="tamanhoMax">
+                    <option value="800">800 px · mais leve</option>
+                    <option value="1000">1000 px · recomendado</option>
+                    <option value="1200">1200 px</option>
+                    <option value="1600">1600 px · mais nítido</option>
+                  </select>
+                </label>
+                <button class="button button-primary" type="submit">Salvar</button>
+              </form>
+
+              <form class="admin-card" id="senha-form">
+                <h2>Trocar senha</h2>
+                <label class="field">
+                  <span>Senha atual</span>
+                  <span class="password-field">
+                    <input id="senha-atual" name="senhaAtual" type="password" autocomplete="current-password" required>
+                    <button class="password-toggle" type="button" aria-label="Mostrar senha" data-alvo="senha-atual"><i class="fa-regular fa-eye"></i></button>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>Nova senha</span>
+                  <span class="password-field">
+                    <input id="senha-nova" name="novaSenha" type="password" autocomplete="new-password" minlength="8" required>
+                    <button class="password-toggle" type="button" aria-label="Mostrar senha" data-alvo="senha-nova"><i class="fa-regular fa-eye"></i></button>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>Confirmar nova senha</span>
+                  <input name="confirmarSenha" type="password" autocomplete="new-password" minlength="8" required>
+                </label>
+                <p class="form-error" id="senha-erro" role="alert"></p>
+                <button class="button button-ghost" type="submit">Trocar senha</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog class="admin-dialog" id="dialogo">
+    <form method="dialog">
+      <h2 id="dialogo-titulo"></h2>
+      <p id="dialogo-texto"></p>
+      <div class="dialog-actions">
+        <button class="button button-ghost" value="cancelar" type="submit">Cancelar</button>
+        <button class="button button-primary" id="dialogo-ok" value="ok" type="submit"></button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="admin-dialog preview-dialog" id="previa">
+    <form method="dialog">
+      <div class="preview-dialog-head">
+        <div>
+          <p class="eyebrow">Prévia</p>
+          <h2>Como aparece no catálogo</h2>
+        </div>
+        <button class="dialog-close" type="submit" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="preview-card-wrap" id="previa-card"></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden><i></i><span></span></div>
+
+  <datalist id="lista-uvas">
+    <option>Cabernet Sauvignon</option><option>Malbec</option><option>Merlot</option><option>Carménère</option>
+    <option>Pinot Noir</option><option>Syrah</option><option>Tannat</option><option>Tempranillo</option>
+    <option>Garnacha</option><option>Sangiovese</option><option>Touriga Nacional</option><option>Petit Verdot</option>
+    <option>Chardonnay</option><option>Sauvignon Blanc</option><option>Moscato</option><option>Riesling</option>
+    <option>Blend</option>
+  </datalist>
+  <datalist id="lista-paises">
+    <option>Argentina</option><option>Chile</option><option>Brasil</option><option>Uruguai</option>
+    <option>Portugal</option><option>Espanha</option><option>Itália</option><option>França</option>
+    <option>África do Sul</option><option>Estados Unidos</option><option>Austrália</option><option>Nova Zelândia</option>
+  </datalist>
+  <datalist id="lista-regioes"></datalist>
+
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

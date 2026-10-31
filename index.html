@@ -41,6 +41,8 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    media="print"
+    onload="this.media='all'"
   >
 
   <link
@@ -155,18 +157,23 @@
         <img
           class="hero-slide active"
           src="./img/visaoAmplaEntrada.jpeg"
+          fetchpriority="high"
           alt=""
         >
 
         <img
           class="hero-slide"
           src="./img/SOMBREAMENTOvinhos.png"
+          fetchpriority="low"
+          decoding="async"
           alt=""
         >
 
         <img
           class="hero-slide"
           src="./img/barril.jpeg"
+          fetchpriority="low"
+          decoding="async"
           alt=""
         >
 
@@ -294,7 +301,7 @@
 
             Conheça nossa loja
 
-            <span>
+            <span aria-hidden="true">
               →
             </span>
 
@@ -324,7 +331,10 @@
 
           <div>
 
-            <p class="eyebrow">
+            <p
+              class="eyebrow"
+              id="destaques-eyebrow"
+            >
               Seleção da casa
             </p>
 
@@ -342,7 +352,7 @@
 
             Ver catálogo completo
 
-            <span>
+            <span aria-hidden="true">
               →
             </span>
 
@@ -352,216 +362,19 @@
 
 
 
-        <div class="wine-grid">
-
-  <!-- TUCUMEN -->
-  <article class="wine-card reveal">
-
-    <div class="wine-photo">
-      <img
-        src="./img/tucumen.jpg"
-        alt="Vinho Tucumen"
-        loading="lazy"
-      >
-    </div>
-
-    <div class="wine-info">
-
-      <span class="wine-category">
-        Argentina
-      </span>
-
-      <h3>Tucumen</h3>
-
-      <div class="wine-details">
-
-        <div class="wine-detail">
-          <span>Uva</span>
-          <strong>Malbec</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Safra</span>
-          <strong>2020</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Tipo</span>
-          <strong>Tinto</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Região</span>
-          <strong>Mendoza</strong>
+        <!-- Preenchido pelo script.js com os vinhos mais clicados no catálogo -->
+        <div
+          class="wine-grid"
+          id="destaques-grid"
+          aria-busy="true"
+        >
+          <div class="wine-card is-skeleton" aria-hidden="true"><div class="wine-photo"></div><div class="wine-info"><span></span><span></span><span></span></div></div>
+          <div class="wine-card is-skeleton" aria-hidden="true"><div class="wine-photo"></div><div class="wine-info"><span></span><span></span><span></span></div></div>
+          <div class="wine-card is-skeleton" aria-hidden="true"><div class="wine-photo"></div><div class="wine-info"><span></span><span></span><span></span></div></div>
+          <div class="wine-card is-skeleton" aria-hidden="true"><div class="wine-photo"></div><div class="wine-info"><span></span><span></span><span></span></div></div>
         </div>
 
       </div>
-
-      <a href="catalogo.html">
-        Ver no catálogo
-      </a>
-
-    </div>
-
-  </article>
-
-
-  <!-- PÉRGOLA -->
-  <article class="wine-card reveal">
-
-    <div class="wine-photo">
-      <img
-        src="./img/pergola.png"
-        alt="Vinho Pérgola"
-        loading="lazy"
-      >
-    </div>
-
-    <div class="wine-info">
-
-      <span class="wine-category">
-        Brasil
-      </span>
-
-      <h3>Pérgola</h3>
-
-      <div class="wine-details">
-
-        <div class="wine-detail">
-          <span>Uva</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Safra</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Tipo</span>
-          <strong>Tinto</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Região</span>
-          <strong>Serra Gaúcha</strong>
-        </div>
-
-      </div>
-
-      <a href="catalogo.html">
-        Ver no catálogo
-      </a>
-
-    </div>
-
-  </article>
-
-
-  <!-- JOAQUIM -->
-  <article class="wine-card reveal">
-
-    <div class="wine-photo">
-      <img
-        src="./img/joaquim.jpg"
-        alt="Vinho Joaquim"
-        loading="lazy"
-      >
-    </div>
-
-    <div class="wine-info">
-
-      <span class="wine-category">
-        Brasil
-      </span>
-
-      <h3>Joaquim</h3>
-
-      <div class="wine-details">
-
-        <div class="wine-detail">
-          <span>Uva</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Safra</span>
-          <strong>2024</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Tipo</span>
-          <strong>Rosé</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Região</span>
-          <strong>São Joaquim - SC</strong>
-        </div>
-
-      </div>
-
-      <a href="catalogo.html">
-        Ver no catálogo
-      </a>
-
-    </div>
-
-  </article>
-
-
-  <!-- GARIBALDI -->
-  <article class="wine-card reveal">
-
-    <div class="wine-photo">
-      <img
-        src="./img/garibaldi-chardonnay.jpg"
-        alt="Espumante Garibaldi Chardonnay"
-        loading="lazy"
-      >
-    </div>
-
-    <div class="wine-info">
-
-      <span class="wine-category">
-        Espumante
-      </span>
-
-      <h3>Garibaldi Chardonnay</h3>
-
-      <div class="wine-details">
-
-        <div class="wine-detail">
-          <span>Uva</span>
-          <strong>Chardonnay</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Safra</span>
-          <strong>—</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Tipo</span>
-          <strong>Espumante</strong>
-        </div>
-
-        <div class="wine-detail">
-          <span>Região</span>
-          <strong>Serra Gaúcha</strong>
-        </div>
-
-      </div>
-
-      <a href="catalogo.html">
-        Ver no catálogo
-      </a>
-
-    </div>
-
-  </article>
-
-</div>
 
     </section>
 
@@ -700,7 +513,7 @@
 
             <a href="tel:+556132569275">
 
-              <i class="fa-solid fa-phone"></i>
+              <i aria-hidden="true" class="fa-solid fa-phone"></i>
 
               (61) 3256-9275
 
@@ -709,7 +522,7 @@
 
             <a href="mailto:vinivinhos2018@gmail.com">
 
-              <i class="fa-regular fa-envelope"></i>
+              <i aria-hidden="true" class="fa-regular fa-envelope"></i>
 
               vinivinhos2018@gmail.com
 
@@ -722,7 +535,7 @@
               rel="noopener"
             >
 
-              <i class="fa-brands fa-instagram"></i>
+              <i aria-hidden="true" class="fa-brands fa-instagram"></i>
 
               @vini.vinhos
 
@@ -888,7 +701,7 @@
     aria-label="Falar com a Vini Vinhos no WhatsApp"
   >
 
-    <i class="fa-brands fa-whatsapp"></i>
+    <i aria-hidden="true" class="fa-brands fa-whatsapp"></i>
 
   </a>
 

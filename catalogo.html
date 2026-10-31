@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="catalog-page">
@@ -17,7 +17,7 @@
       <div class="nav-wrap">
         <a class="brand" href="index.html"><img src="./img/logo.png" alt="Vini Vinhos"></a>
         <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
-        <nav class="main-nav"><a href="index.html">Início</a><a href="index.html#historia">Nossa história</a><a class="active" href="catalogo.html">Catálogo</a><a href="index.html#loja">Visite a loja</a></nav>
+        <nav class="main-nav" aria-label="Navegação principal"><a href="index.html">Início</a><a href="index.html#historia">Nossa história</a><a class="active" href="catalogo.html">Catálogo</a><a href="index.html#loja">Visite a loja</a></nav>
         <a class="nav-cta" href="https://wa.me/5561981090715" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </header>
@@ -25,7 +25,7 @@
     <main>
       <section class="catalog-hero">
         <div class="container">
-          <a class="back-link" href="index.html">← Voltar para o início</a>
+          <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Voltar para o início</a>
           <p class="eyebrow">Nosso catálogo</p>
           <h1>Encontre um vinho para o seu momento.</h1>
           <p>Busque pelo nome ou filtre por tipo. Para confirmar disponibilidade e fazer o pedido, fale direto com a loja pelo WhatsApp.</p>
@@ -35,25 +35,25 @@
       <section class="catalog-section">
         <div class="container">
           <div class="catalog-toolbar">
-            <label class="search-box" for="busca-vinho"><i class="fa-solid fa-magnifying-glass"></i><input id="busca-vinho" type="search" placeholder="Buscar por nome do vinho..." autocomplete="off"></label>
-            <div class="filter-row" aria-label="Filtros do catálogo">
-              <button class="filter-btn active" type="button" data-filter="todos">Todos</button>
-              <button class="filter-btn" type="button" data-filter="tinto">Tintos</button>
-              <button class="filter-btn" type="button" data-filter="branco">Brancos</button>
-              <button class="filter-btn" type="button" data-filter="espumante">Espumantes</button>
-              <button class="filter-btn" type="button" data-filter="rose">Rosés</button>
+            <label class="search-box" for="busca-vinho"><span class="sr-only">Buscar vinho</span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="busca-vinho" type="search" placeholder="Nome, uva, país ou região" autocomplete="off"></label>
+            <div class="filter-row" role="group" aria-label="Filtrar por tipo">
+              <button class="filter-btn active" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+              <button class="filter-btn" type="button" data-filter="tinto" aria-pressed="false">Tintos</button>
+              <button class="filter-btn" type="button" data-filter="branco" aria-pressed="false">Brancos</button>
+              <button class="filter-btn" type="button" data-filter="espumante" aria-pressed="false">Espumantes</button>
+              <button class="filter-btn" type="button" data-filter="rose" aria-pressed="false">Rosés</button>
             </div>
           </div>
 
-          <div class="catalog-meta"><span id="catalog-count">Carregando catálogo...</span></div>
-          <div class="catalog-grid" id="catalogo" aria-live="polite"></div>
+          <div class="catalog-meta"><span id="catalog-count" role="status">Carregando catálogo...</span></div>
+          <div class="catalog-grid" id="catalogo" aria-busy="true"></div>
           <div class="catalog-empty" id="catalog-empty" hidden><h2>Nenhum rótulo encontrado.</h2><p>Tente outro nome ou escolha um filtro diferente.</p></div>
         </div>
       </section>
     </main>
 
     <footer class="footer compact"><div class="container footer-bottom"><span>© 2026 Vini Vinhos.</span><span>Desenvolvido por <a href="https://www.linkedin.com/in/thiago-da-costa-brito/" target="_blank" rel="noopener">Thiago Brito</a></span></div></footer>
-    <a class="whatsapp-float" href="https://wa.me/5561981090715" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a class="whatsapp-float" href="https://wa.me/5561981090715" target="_blank" rel="noopener" aria-label="Falar com a Vini Vinhos no WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
     <script src="script.js"></script>
   </body>
   </html>
